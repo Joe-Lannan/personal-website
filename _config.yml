@@ -22,7 +22,7 @@ repository               : "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "profile.jpg"
   name             : "Joe Lannan"
   pronouns         : # example: "she/her"  
   bio              : "I am a bio-physicist, currently finishing up my PhD. I am also the founder of Koinslot INC, a retro handheld gaming company."
