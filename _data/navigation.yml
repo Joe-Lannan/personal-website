@@ -9,10 +9,13 @@
 
 main:
   - title: "Publications"
-    url: /publications/
+    url: /publications-auto/
 
   - title: "Presentations"
-    url: /talks/    
+    url: /talks/
+    
+  - title: "GitHub Projects"
+    url: /github-projects/
 
   - title: "Research"
     url: /research/

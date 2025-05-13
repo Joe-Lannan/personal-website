@@ -1,0 +1,54 @@
+name: Update Website Content Automatically
+
+on:
+  schedule:
+    # Run once a week on Sunday at midnight
+    - cron: '0 0 * * 0'
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 PyGithub scholarly python-dotenv pyyaml
+      
+      - name: Setup GitHub API token
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
+      
+      - name: Fetch GitHub repositories
+        run: |
+          python _scripts/fetch_github_repos.py
+      
+      - name: Fetch publications from Google Scholar
+        run: |
+          python _scripts/fetch_publications.py
+      
+      - name: Update portfolio items
+        run: |
+          python _scripts/update_portfolio.py
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Action Bot'
+          git config --global user.email 'action@github.com'
+          git add _data/repositories.yml
+          git add _data/publications.yml
+          git add _portfolio/
+          git diff --staged --quiet || git commit -m "Auto-update website content from GitHub and publications"
+          git push

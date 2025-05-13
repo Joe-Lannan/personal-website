@@ -7,8 +7,19 @@ author_profile: true
 
 {% include base_path %}
 
+<h2>Publications and Preprints</h2>
+<div class="grid__wrapper">
+  {% assign publications = site.portfolio | where: "categories", "research" | sort: "date" | reverse %}
+  {% for post in publications %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+</div>
 
-{% for post in site.portfolio %}
-  {% include archive-single.html %}
-{% endfor %}
+<h2>GitHub Projects</h2>
+<div class="grid__wrapper">
+  {% assign github_projects = site.portfolio | where: "categories", "project" | sort: "date" | reverse %}
+  {% for post in github_projects %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+</div>
 
