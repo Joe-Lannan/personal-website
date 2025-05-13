@@ -1,0 +1,6 @@
+Rootletin may be a homolog of [[Sfi1]]
+
+[[@Yang2002-ws]]
+
+[Rootletin Protein data bank](https://www.rcsb.org/groups/summary/polymer_entity/Q5TZA2?request=%7B%22query%22%3A%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_polymer_entity.rcsb_polymer_name_combined.names%22%2C%22negation%22%3Afalse%2C%22operator%22%3A%22exact_match%22%2C%22value%22%3A%22Rootletin%22%7D%7D%2C%22return_type%22%3A%22polymer_entity%22%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A25%7D%2C%22scoring_strategy%22%3A%22combined%22%2C%22sort%22%3A%5B%7B%22sort_by%22%3A%22score%22%2C%22direction%22%3A%22desc%22%7D%5D%7D%7D&searchQueryState=%7B%22index%22%3A1%2C%22searchQueryList%22%3A%5Bnull%2C%7B%22query%22%3A%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_polymer_entity.rcsb_polymer_name_combined.names%22%2C%22negation%22%3Afalse%2C%22operator%22%3A%22exact_match%22%2C%22value%22%3A%22Rootletin%22%7D%7D%2C%22return_type%22%3A%22polymer_entity%22%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A25%7D%2C%22scoring_strategy%22%3A%22combined%22%2C%22sort%22%3A%5B%7B%22sort_by%22%3A%22score%22%2C%22direction%22%3A%22desc%22%7D%5D%7D%7D%5D%7D)
+

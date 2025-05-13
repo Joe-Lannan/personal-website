@@ -1,0 +1,2 @@
+Cell models are organisms that have their membranes partially removed with triton. This may allow for drugs and antibodies to enter into a kind of living cell thing for experiments. This paper describes how they are made [[@Ishida1988-wd]]. 
+These have been able to work in [[Spirostomum]] to try a number of experiment.

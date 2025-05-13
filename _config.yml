@@ -219,6 +219,9 @@ collections:
   talks:
     output: true
     permalink: /:collection/:path/
+  knowledgemap:
+    output: true
+    permalink: /:collection/:path/
 
 # These settings control how pages and collections are included in the site
 defaults:
@@ -275,6 +278,16 @@ defaults:
       layout: talk
       author_profile: true
       share: true
+      
+  # _knowledgemap
+  - scope:
+      path: ""
+      type: knowledgemap
+    values:
+      layout: knowledgemap
+      author_profile: true
+      share: true
+      comments: true
 
 # Sass/SCSS
 sass:

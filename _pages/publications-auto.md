@@ -7,7 +7,71 @@ author_profile: true
 
 {% include base_path %}
 
+<div class="citation-stats">
+  <h2>Citation Statistics</h2>
+  <p>Academic impact metrics automatically fetched from Google Scholar.</p>
+  <div id="scholar-stats-container">
+    <!-- Scholar stats will be loaded here by scholar-stats.js -->
+    <p class="loading">Loading citation statistics...</p>
+  </div>
+</div>
+
+<style>
+  .stat-card {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .stat-heading {
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .stat-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .stat-table th, .stat-table td {
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .stat-table th {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .scholar-link {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: #4285f4;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .scholar-link:hover {
+    background-color: #3367d6;
+  }
+  
+  .error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 15px;
+  }
+</style>
+
 <div class="publications">
+  <h2>Published Papers</h2>
   <p>Below are my publications and research work, automatically fetched from scholarly databases like Semantic Scholar and Google Scholar.</p>
   <p>My research focuses on biophysics, particularly the ultrafast contraction mechanisms in unicellular organisms like <em>Spirostomum ambiguum</em>. I also publish work related to hardware engineering through my company, Koinslot.</p>
   
@@ -97,3 +161,5 @@ author_profile: true
 
 <!-- Load the publications fetcher script -->
 <script src="{{ base_path }}/assets/js/publications.js"></script>
+<!-- Load the Google Scholar stats script -->
+<script src="{{ base_path }}/assets/js/scholar-stats.js"></script>
