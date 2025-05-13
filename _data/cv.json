@@ -1,152 +1,357 @@
 {
   "basics": {
-    "name": "Your Sidebar Name",
-    "email": "none@example.org",
-    "phone": "",
-    "website": "https://academicpages.github.io",
-    "summary": "Currently employed at Red Brick University. Short biography for the left-hand sidebar",
+    "name": "Joseph Lannan",
+    "email": "jmlannan@ncsu.edu",
+    "phone": "704-573-7809",
+    "website": "https://joe-lannan.github.io/personal-website/",
+    "summary": "Biophysicist investigating the ultrafast contraction of Spirostomum ambiguum. PhD Candidate at NCSU and founder of Koinslot INC, a retro handheld gaming company.",
     "location": {
       "address": "",
       "postalCode": "",
-      "city": "Earth",
+      "city": "Raleigh",
       "countryCode": "US",
-      "region": ""
+      "region": "NC"
     },
     "profiles": [
       {
         "network": "Google Scholar",
         "username": "",
-        "url": "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
+        "url": "https://scholar.google.com/citations?hl=en&user=XIiV4nwAAAAJ"
       },
       {
         "network": "ORCID",
         "username": "",
-        "url": "http://orcid.org/yourorcidurl"
+        "url": "https://orcid.org/0000-0002-1526-6018"
       },
       {
         "network": "GitHub",
-        "username": "academicpages",
-        "url": "https://github.com/academicpages"
+        "username": "Joe-Lannan",
+        "url": "https://github.com/Joe-Lannan"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "joseph-lannan",
+        "url": "https://www.linkedin.com/in/joseph-lannan/"
       }
     ]
   },
-  "work": [],
-  "education": [
+  "work": [
     {
-      "institution": "GitHub University",
-      "area": "Ph.D in Version Control Theory",
-      "studyType": "",
-      "startDate": "",
+      "company": "North Carolina State University, Elting Lab",
+      "position": "PhD Candidate/Biophysics Researcher",
+      "website": "https://physics.ncsu.edu/eltinglab/",
+      "startDate": "2020",
+      "endDate": "Present",
+      "summary": "Research on the cytoskeleton of Spirostomum ambiguum, investigating its ultrafast contraction mechanism.",
+      "highlights": [
+        "Advanced imaging techniques including SEM, TEM, Confocal microscopy",
+        "Immuno-TEM imaging of Spirostomum myoneme",
+        "Multiscale computational modeling",
+        "Magnetic tweezing development"
+      ]
+    },
+    {
+      "company": "Koinslot INC",
+      "position": "President and Technical Director",
+      "website": "http://koinslotkywy.com",
+      "startDate": "2022",
+      "endDate": "Present",
+      "summary": "Co-founded a company producing a nostalgic gaming system for education.",
+      "highlights": [
+        "Lead hardware development",
+        "Managed programming and technical teams",
+        "Received initial funding for education applications"
+      ]
+    },
+    {
+      "company": "Sonar Applications INC",
+      "position": "Technical Director",
+      "website": "https://www.sonarmobileapp.com",
+      "startDate": "2020",
+      "endDate": "2022",
+      "summary": "Built an audio social media app that reached 1000 beta testers.",
+      "highlights": []
+    },
+    {
+      "company": "North Carolina State University",
+      "position": "Teaching Assistant",
+      "website": "",
+      "startDate": "2019",
+      "endDate": "2020",
+      "summary": "Taught physics labs for undergraduate engineering students and worked in tutoring center.",
+      "highlights": []
+    },
+    {
+      "company": "Betabox Learning",
+      "position": "Director of Technological Operations",
+      "website": "https://betaboxlearning.com",
+      "startDate": "2018",
+      "endDate": "2019",
+      "summary": "Managed IT systems, programming, web design, electronics, teaching K-12, logistics, and fabrication.",
+      "highlights": []
+    },
+    {
+      "company": "North Carolina State University, Dougherty Lab",
+      "position": "Condensed Matter Researcher",
+      "website": "https://sites.google.com/site/doughertydaniel/home",
+      "startDate": "2018",
       "endDate": "2018",
-      "gpa": null,
-      "courses": []
-    },
-    {
-      "institution": "GitHub University",
-      "area": "M.S. in Jekyll",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2014",
-      "gpa": null,
-      "courses": []
-    },
-    {
-      "institution": "GitHub University",
-      "area": "B.S. in GitHub",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2012",
-      "gpa": null,
-      "courses": []
+      "summary": "Experiments with growing monolayer transistors using vacuum deposition.",
+      "highlights": [
+        "Experience with AFM, Glovebox, spin coaters, vacuum chambers, and lasers"
+      ]
     }
   ],
-  "skills": [],
-  "languages": [],
-  "interests": [],
-  "references": [],
+  "education": [
+    {
+      "institution": "North Carolina State University",
+      "area": "Ph.D in Physics",
+      "studyType": "Doctorate",
+      "startDate": "2019",
+      "endDate": "2025 (expected)",
+      "gpa": null,
+      "courses": [
+        "Statistical Mechanics",
+        "Electrodynamics",
+        "Quantum Mechanics",
+        "Computational Physics",
+        "Condensed Matter Physics",
+        "Quantum Optics",
+        "Biological Physics"
+      ],
+      "url": "/files/Diplomas/Transcript.pdf"
+    },
+    {
+      "institution": "North Carolina State University",
+      "area": "M.S. in Physics",
+      "studyType": "Masters",
+      "startDate": "2019",
+      "endDate": "2022",
+      "gpa": "3.9",
+      "courses": [],
+      "url": "/files/Diplomas/Joe_Lannan_Masters_Diploma.pdf"
+    },
+    {
+      "institution": "North Carolina State University",
+      "area": "B.S. in Physics, Minor in Mathematics",
+      "studyType": "Bachelor",
+      "startDate": "2015",
+      "endDate": "2018",
+      "gpa": "3.5",
+      "courses": [],
+      "url": "/files/Diplomas/Joe_Lannan_Bachelors.pdf"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming",
+      "keywords": [
+        "Python",
+        "Bash",
+        "Mathematica",
+        "MATLAB",
+        "C/C++"
+      ]
+    },
+    {
+      "name": "Laboratory Techniques",
+      "keywords": [
+        "Electron Microscopy (SEM, TEM)",
+        "Confocal Microscopy",
+        "AFM",
+        "Cell Culture",
+        "Microinjection",
+        "Laser Systems"
+      ]
+    },
+    {
+      "name": "Fabrication",
+      "keywords": [
+        "3D Printing",
+        "Electronics",
+        "Metal & Wood Working",
+        "Laser Cutting"
+      ]
+    },
+    {
+      "name": "Software",
+      "keywords": [
+        "ImageJ",
+        "Imaris",
+        "Illastik",
+        "Autodesk Fusion 360",
+        "Adobe Suite",
+        "Linux"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Biophysics",
+      "keywords": [
+        "Cellular mechanics",
+        "Cytoskeleton",
+        "Microscopy",
+        "Image analysis"
+      ]
+    },
+    {
+      "name": "Entrepreneurship",
+      "keywords": [
+        "Educational technology",
+        "Open source hardware",
+        "Retro gaming"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "Dr. Mary Elting",
+      "reference": "Principal Investigator, North Carolina State University",
+      "email": "mary.elting@ncsu.edu"
+    },
+    {
+      "name": "Dr. Daniel Dougherty",
+      "reference": "Principal Investigator, North Carolina State University",
+      "email": "dbdoughe@ncsu.edu"
+    }
+  ],
   "publications": [
     {
-      "name": "Paper Title Number 1",
-      "publisher": "Journal 1",
-      "releaseDate": "2009-10-01",
-      "website": "http://academicpages.github.io/files/paper1.pdf",
-      "summary": "This paper is about the number 1. The number 2 is left for future work."
+      "name": "Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell Spirostomum ambiguum",
+      "publisher": "Biorxiv",
+      "releaseDate": "2025",
+      "website": "https://doi.org/10.1101/2024.11.07.622534",
+      "summary": "This paper provides a cohesive, multiscale model for the contraction of Spirostomum, investigating how single cells can execute extreme shape changes with potential for advancing cell biophysics."
     },
     {
-      "name": "Paper Title Number 2",
-      "publisher": "Journal 1",
-      "releaseDate": "2010-10-01",
-      "website": "http://academicpages.github.io/files/paper2.pdf",
-      "summary": "This paper is about the number 2. The number 3 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 3",
-      "publisher": "Journal 1",
-      "releaseDate": "2015-10-01",
-      "website": "http://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about the number 3. The number 4 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 4",
-      "publisher": "GitHub Journal of Bugs",
-      "releaseDate": "2024-02-17",
-      "website": "http://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about fixing template issue #693."
+      "name": "Culture and imaging techniques for the study of the ultrafast giant cell Spirostomum ambiguum",
+      "publisher": "In progress",
+      "releaseDate": "2025",
+      "website": "",
+      "summary": "Describes specialized techniques for culturing and imaging the challenging model organism Spirostomum ambiguum."
     }
   ],
   "presentations": [
     {
-      "name": "Talk 1 on Relevant Topic in Your Field",
-      "event": "UC San Francisco, Department of Testing",
-      "date": "2012-03-01",
-      "location": "San Francisco, CA, USA",
-      "description": ""
+      "name": "Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell Spirostomum ambiguum",
+      "event": "American Society for Cell Biology",
+      "date": "2024",
+      "location": "San Diego, CA, USA",
+      "description": "Poster and oral presentation on Spirostomum contraction mechanism"
     },
     {
-      "name": "Tutorial 1 on Relevant Topic in Your Field",
-      "event": "UC-Berkeley Institute for Testing Science",
-      "date": "2013-03-01",
-      "location": "Berkeley, CA, USA",
-      "description": ""
+      "name": "Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell Spirostomum ambiguum",
+      "event": "Triangle Cytoskeleton",
+      "date": "2024",
+      "location": "Raleigh, NC, USA",
+      "description": "Poster presentation"
     },
     {
-      "name": "Talk 2 on Relevant Topic in Your Field",
-      "event": "London School of Testing",
-      "date": "2014-02-01",
-      "location": "London, UK",
-      "description": ""
+      "name": "Research presentation on cellular biophysics",
+      "event": "Betabox Learning Corner, Invited Speaker",
+      "date": "2024",
+      "location": "USA",
+      "description": "General public talk about science for K-12 school teachers"
     },
     {
-      "name": "Conference Proceeding talk 3 on Relevant Topic in Your Field",
-      "event": "Testing Institute of America 2014 Annual Conference",
-      "date": "2014-03-01",
-      "location": "Los Angeles, CA, USA",
-      "description": ""
+      "name": "Ultrafast contraction: Investigating the structures underlying myoneme force generating networks in Spirostomum sp.",
+      "event": "American Society for Cell Biology",
+      "date": "2023",
+      "location": "Boston, MA, USA",
+      "description": "Poster presentation"
+    },
+    {
+      "name": "Ultrafast contraction: Investigating the structures underlying myoneme force generating networks in Spirostomum sp.",
+      "event": "American Physical Society March Meeting",
+      "date": "2023",
+      "location": "Las Vegas, NV, USA",
+      "description": "Oral presentation"
     }
   ],
   "teaching": [
     {
-      "course": "Teaching experience 1",
-      "institution": "University 1, Department",
-      "date": "2014-01-01",
-      "role": "Undergraduate course",
-      "description": ""
+      "course": "Physics Labs for Engineering Students",
+      "institution": "North Carolina State University, Physics Department",
+      "date": "2019-2020",
+      "role": "Teaching Assistant",
+      "description": "Taught undergraduate engineering students in physics laboratory courses"
     },
     {
-      "course": "Teaching experience 2",
-      "institution": "University 1, Department",
-      "date": "2015-01-01",
-      "role": "Workshop",
-      "description": ""
+      "course": "Physics Tutoring Center",
+      "institution": "North Carolina State University",
+      "date": "2019-2020",
+      "role": "Tutor",
+      "description": "Helped students with assignments and exam preparation"
+    },
+    {
+      "course": "AFM Training",
+      "institution": "North Carolina State University, Physics Department",
+      "date": "2020-2025",
+      "role": "Super User",
+      "description": "Trained users on an Asylum MFP-3D AFM and assisted with teaching labs"
+    },
+    {
+      "course": "Undergraduate Research Mentoring",
+      "institution": "North Carolina State University, Elting Lab",
+      "date": "2020-Present",
+      "role": "Mentor",
+      "description": "Mentored multiple undergraduate researchers on the Spirostomum project"
     }
   ],
   "portfolio": [
     {
-      "name": "Portfolio item number 1",
-      "category": "portfolio",
+      "name": "Koinslot Gaming System",
+      "category": "entrepreneurship",
+      "date": "2022-Present",
+      "url": "http://kywy.io",
+      "description": "Co-founded a company producing a nostalgic gaming system for education. Designed the hardware and led technical development."
+    },
+    {
+      "name": "Sonar Applications",
+      "category": "software",
+      "date": "2020-2022",
+      "url": "https://www.sonarmobileapp.com",
+      "description": "Developed an audio social media app with approximately 1000 beta testers as Technical Director."
+    },
+    {
+      "name": "3D Printing Projects",
+      "category": "fabrication",
+      "date": "2020-Present",
+      "url": "https://www.printables.com/@TypicalTitan_235488",
+      "description": "Various 3D printing projects shared on Printables.com."
+    }
+  ],
+  "certificates": [
+    {
+      "name": "MBL Physiology Course",
+      "issuer": "Marine Biological Laboratory",
+      "date": "2023",
+      "url": ""
+    },
+    {
+      "name": "Advanced Open Water Diver",
+      "issuer": "PADI/SSI",
       "date": "",
-      "url": "",
-      "description": "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+      "url": ""
+    },
+    {
+      "name": "The Physics of Life Summer School",
+      "issuer": "Center for The Physics of Biological Function",
+      "date": "2020",
+      "url": ""
+    },
+    {
+      "name": "Quantum Computing Open Source Development",
+      "issuer": "IBM",
+      "date": "2020",
+      "url": ""
     }
   ]
 }
