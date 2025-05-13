@@ -222,6 +222,9 @@ collections:
   knowledgemap:
     output: true
     permalink: /:collection/:path/
+  blog:
+    output: true
+    permalink: /:collection/:path/
 
 # These settings control how pages and collections are included in the site
 defaults:
@@ -288,6 +291,17 @@ defaults:
       author_profile: true
       share: true
       comments: true
+      
+  # _blog
+  - scope:
+      path: ""
+      type: blog
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: true
+      toc: true
 
 # Sass/SCSS
 sass:

@@ -1,0 +1,84 @@
+{
+  "nodes": [
+    {
+      "id": "biophysics/spirostomum-contraction",
+      "label": "Ultrafast Contraction in Spirostomum ambiguum",
+      "tags": ["biophysics", "spirostomum", "cell mechanics", "research"],
+      "path": "/blog/biophysics/spirostomum-contraction/",
+      "size": 10,
+      "color": "#ea4335"
+    },
+    {
+      "id": "programming/retro-game-development",
+      "label": "Developing Retro Games for Handheld Consoles",
+      "tags": ["programming", "game development", "embedded systems", "retro gaming", "koinslot"],
+      "path": "/blog/programming/retro-game-development/",
+      "size": 10,
+      "color": "#4285f4"
+    },
+    {
+      "id": "biophysics/calcium-signaling",
+      "label": "Calcium Signaling in Cellular Contraction",
+      "tags": ["biophysics", "cellular signaling", "research"],
+      "path": "/blog/biophysics/calcium-signaling/",
+      "size": 8,
+      "color": "#ea4335"
+    },
+    {
+      "id": "companies/koinslot-journey",
+      "label": "Koinslot: Building a Retro Gaming Company",
+      "tags": ["entrepreneurship", "koinslot", "hardware"],
+      "path": "/blog/companies/koinslot-journey/",
+      "size": 9,
+      "color": "#fbbc05"
+    },
+    {
+      "id": "research/microscopy-techniques",
+      "label": "Advanced Microscopy Techniques for Biophysics",
+      "tags": ["research", "microscopy", "imaging", "methods"],
+      "path": "/blog/research/microscopy-techniques/",
+      "size": 7,
+      "color": "#34a853"
+    },
+    {
+      "id": "programming/embedded-systems",
+      "label": "Embedded Systems Programming Challenges",
+      "tags": ["programming", "embedded systems", "hardware"],
+      "path": "/blog/programming/embedded-systems/",
+      "size": 8,
+      "color": "#4285f4"
+    }
+  ],
+  "links": [
+    {
+      "source": "biophysics/spirostomum-contraction",
+      "target": "biophysics/calcium-signaling",
+      "value": 3
+    },
+    {
+      "source": "biophysics/spirostomum-contraction",
+      "target": "research/microscopy-techniques",
+      "value": 2
+    },
+    {
+      "source": "programming/retro-game-development",
+      "target": "companies/koinslot-journey",
+      "value": 4
+    },
+    {
+      "source": "programming/retro-game-development",
+      "target": "programming/embedded-systems",
+      "value": 3
+    },
+    {
+      "source": "companies/koinslot-journey",
+      "target": "programming/embedded-systems",
+      "value": 2
+    },
+    {
+      "source": "research/microscopy-techniques",
+      "target": "biophysics/calcium-signaling",
+      "value": 1
+    }
+  ]
+}
