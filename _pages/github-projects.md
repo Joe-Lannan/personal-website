@@ -8,58 +8,13 @@ author_profile: true
 {% include base_path %}
 
 <div class="github-projects">
-  <p>Below are my featured GitHub repositories, automatically updated from my GitHub profile.</p>
+  <p>Below are my featured GitHub repositories, automatically fetched from my GitHub profile.</p>
+  <p>These repositories showcase my work in biophysics research, software development, and hardware projects related to Koinslot.</p>
   
-  {% if site.data.repositories.repositories %}
-    {% assign repos = site.data.repositories.repositories %}
-    
-    <div class="grid__wrapper">
-      {% for repo in repos %}
-        <div class="grid__item">
-          <div class="archive__item">
-            <div class="archive__item-body">
-              <h2 class="archive__item-title">
-                <a href="{{ repo.html_url }}">{{ repo.name }}</a>
-              </h2>
-              
-              <div class="archive__item-excerpt">
-                <p>{{ repo.description }}</p>
-                
-                {% if repo.language %}
-                <p><strong>Language:</strong> {{ repo.language }}</p>
-                {% endif %}
-                
-                <p>
-                  <span class="repo-stat"><i class="fa fa-star" aria-hidden="true"></i> {{ repo.stars }}</span>
-                  <span class="repo-stat"><i class="fa fa-code-fork" aria-hidden="true"></i> {{ repo.forks }}</span>
-                  <span class="repo-stat"><i class="fa fa-calendar" aria-hidden="true"></i> Updated: {{ repo.updated_at }}</span>
-                </p>
-                
-                {% if repo.topics and repo.topics.size > 0 %}
-                <p class="repo-topics">
-                  {% for topic in repo.topics %}
-                  <span class="repo-topic">{{ topic }}</span>
-                  {% endfor %}
-                </p>
-                {% endif %}
-                
-                <div class="repo-links">
-                  <a href="{{ repo.html_url }}" class="btn btn--primary">View on GitHub</a>
-                  {% if repo.homepage %}
-                  <a href="{{ repo.homepage }}" class="btn btn--secondary">Project Website</a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-    
-    <p class="last-updated">Last updated: {{ site.data.repositories.last_updated }}</p>
-  {% else %}
-    <p>No GitHub repositories found. Please check back later.</p>
-  {% endif %}
+  <!-- Container for dynamically loaded GitHub repositories -->
+  <div id="github-projects-container">
+    <!-- GitHub repositories will be loaded here -->
+  </div>
 </div>
 
 <style>
@@ -89,4 +44,30 @@ author_profile: true
     font-size: 0.8em;
     margin-top: 30px;
   }
+  .error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 15px;
+  }
+  .grid__wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .grid__item {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  .grid__item:hover {
+    transform: translateY(-5px);
+  }
 </style>
+
+<!-- Load the GitHub repository fetcher script -->
+<script src="{{ base_path }}/assets/js/github-projects.js"></script>

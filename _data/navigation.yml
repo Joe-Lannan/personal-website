@@ -10,11 +10,14 @@
 main:
   - title: "Publications"
     url: /publications-auto/
+    
+  - title: "Citation Stats"
+    url: /citation-stats/
 
   - title: "Presentations"
     url: /talks/
     
-  - title: "GitHub Projects"
+  - title: "GitHub"
     url: /github-projects/
 
   - title: "Research"
