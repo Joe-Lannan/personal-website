@@ -28,7 +28,14 @@ author_profile: true
         {% assign path_parts = blog.path | split: "/" %}
         {% if path_parts.size > 2 %}
           {% assign dir = path_parts[1] %}
-          {% unless blog_dirs contains dir %}
+          {% assign dir_exists = false %}
+          {% for existing_dir in blog_dirs %}
+            {% if existing_dir == dir %}
+              {% assign dir_exists = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          {% unless dir_exists %}
             {% assign blog_dirs = blog_dirs | push: dir %}
           {% endunless %}
         {% endif %}
@@ -76,7 +83,14 @@ author_profile: true
       
       <!-- Root level posts -->
       {% if site.blog.size > 0 %}
-        {% assign root_posts = site.blog | where_exp: "item", "item.path contains '_blog/'" | where_exp: "item", "item.path | split: '/' | size <= 3" %}
+        {% assign all_blog_posts = site.blog | where_exp: "item", "item.path contains '_blog/'" %}
+        {% assign root_posts = '' | split: '' %}
+        {% for post in all_blog_posts %}
+          {% assign path_parts = post.path | split: "/" %}
+          {% if path_parts.size <= 3 %}
+            {% assign root_posts = root_posts | push: post %}
+          {% endif %}
+        {% endfor %}
         {% if root_posts.size > 0 %}
         <div class="directory-section">
           <h3>Other Posts</h3>
