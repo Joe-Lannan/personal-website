@@ -14,7 +14,7 @@ title_separator: "-"
 name: &name "Joe Lannan"
 description: &description "Biophysicist, entrepreneur, programmer, researcher"
 url: https://joe-lannan.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io" or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
-baseurl: "/personal-website" # the subpath of your site, e.g. "/blog"
+baseurl: "/" # the subpath of your site, e.g. "/blog"
 repository: "joe-lannan/personal-website"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
@@ -25,9 +25,9 @@ author:
   avatar: "profile.jpg"
   name: "Joe Lannan"
   pronouns: # example: "she/her"
-  bio              : "Biophysicist investigating the ultrafast contraction of Spirostomum ambiguum. PhD Candidate at NCSU and founder of Koinslot INC, a retro handheld gaming company."
+  bio: "Biophysicist investigating the ultrafast contraction of Spirostomum ambiguum. PhD Candidate at NCSU and founder of Koinslot INC, a retro handheld gaming company."
   location: "Raleigh, NC"
-  employer         : "North Carolina State University, Elting Lab"
+  employer: "North Carolina State University, Elting Lab"
   uri: # URL
   email: "jmlannan@ncsu.edu"
 
