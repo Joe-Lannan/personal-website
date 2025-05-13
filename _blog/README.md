@@ -1,6 +1,6 @@
 # Blog and Knowledge Map System
 
-This directory contains your blog posts from Obsidian, organized by topic directories. The system automatically generates a knowledge map visualization showing connections between your notes.
+This directory contains your blog posts from Obsidian, organized by topic directories. The system automatically generates a knowledge map visualization showing connections between your notes and supports Excalidraw diagrams.
 
 ## Directory Structure
 
@@ -30,6 +30,7 @@ This will:
 - Process wiki-links between notes
 - Extract tags for categorization
 - Handle images and other attachments
+- Process Excalidraw diagrams
 - Generate the knowledge graph data
 
 ### Option 2: Manual Creation
@@ -82,3 +83,26 @@ Images referenced in your Obsidian notes will be:
 3. **Organize with directories**: Keep related topics in directories for better organization
 4. **Add frontmatter**: Including title, date, and excerpt in your Obsidian notes will improve the presentation
 5. **Use meaningful filenames**: These will be used for URLs if no title is specified
+6. **Include Excalidraw diagrams**: Files with `.excalidraw.md` extension will be rendered as interactive diagrams
+
+## Working with Excalidraw
+
+### Supported Excalidraw Files
+
+The website supports two types of Excalidraw files:
+1. Markdown files with `.excalidraw.md` extension
+2. Regular markdown files containing Excalidraw JSON data (starting with `{"type": "excalidraw"`)
+
+### Creating Excalidraw Diagrams
+
+You can create Excalidraw diagrams in your Obsidian vault using:
+- The built-in Excalidraw plugin for Obsidian
+- Any exported Excalidraw files (with the content copied into a markdown file)
+
+### Excalidraw Features
+
+When imported, Excalidraw files will:
+- Be displayed with a special viewer component
+- Maintain the original diagram data
+- Allow for additional notes and explanations below the diagram
+- Be properly integrated into the knowledge graph

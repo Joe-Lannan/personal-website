@@ -68,8 +68,15 @@ class KnowledgeGraph {
   loadData() {
     d3.json(this.options.dataUrl)
       .then(data => {
-        if (!data || !data.nodes || !data.links) {
-          throw new Error('Invalid data format');
+        if (!data) {
+          throw new Error('No data received');
+        }
+        if (!data.nodes || !Array.isArray(data.nodes) || data.nodes.length === 0) {
+          throw new Error('No nodes found in knowledge graph data');
+        }
+        if (!data.links || !Array.isArray(data.links)) {
+          data.links = []; // Create empty links array if missing
+          console.warn('No links found in knowledge graph data, proceeding with nodes only');
         }
         this.processData(data);
         this.renderGraph();
@@ -309,6 +316,12 @@ class KnowledgeGraph {
         this.hideNodeInfo();
       }
     });
+    
+    // Handle empty or minimal graph data
+    if (!this.nodes || this.nodes.length < 1) {
+      this.showError("No nodes found in knowledge graph data.");
+      return;
+    }
 
     // Handle window resize
     window.addEventListener('resize', () => this.handleResize());
@@ -328,6 +341,11 @@ class KnowledgeGraph {
   applyTagClustering() {
     // Group nodes by their primary tag
     const tagGroups = {};
+    
+    // Skip if no nodes
+    if (!this.nodes || this.nodes.length < 1) {
+      return;
+    }
     
     this.nodes.forEach(node => {
       if (node.tags && node.tags.length > 0) {
@@ -445,6 +463,12 @@ class KnowledgeGraph {
   }
 
   showError(message) {
+    // Clear loading indicator if present
+    const loadingIndicator = this.container.querySelector('.loading');
+    if (loadingIndicator) {
+      loadingIndicator.remove();
+    }
+    
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
@@ -456,6 +480,11 @@ class KnowledgeGraph {
 document.addEventListener('DOMContentLoaded', function() {
   const graphContainer = document.getElementById('knowledge-graph-container');
   if (graphContainer) {
-    const graph = new KnowledgeGraph('knowledge-graph-container');
+    try {
+      const graph = new KnowledgeGraph('knowledge-graph-container');
+    } catch (err) {
+      console.error('Error initializing knowledge graph:', err);
+      graphContainer.innerHTML = `<div class="error-message">Error initializing knowledge graph: ${err.message}</div>`;
+    }
   }
 });

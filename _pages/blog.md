@@ -23,15 +23,17 @@ author_profile: true
   <div class="directory-explorer">
     {% comment %}Get all directories in the blog collection{% endcomment %}
     {% assign blog_dirs = "" | split: "" %}
-    {% for blog in site.blog %}
-      {% assign path_parts = blog.path | split: "/" %}
-      {% if path_parts.size > 2 %}
-        {% assign dir = path_parts[1] %}
-        {% unless blog_dirs contains dir %}
-          {% assign blog_dirs = blog_dirs | push: dir %}
-        {% endunless %}
-      {% endif %}
-    {% endfor %}
+    {% if site.blog.size > 0 %}
+      {% for blog in site.blog %}
+        {% assign path_parts = blog.path | split: "/" %}
+        {% if path_parts.size > 2 %}
+          {% assign dir = path_parts[1] %}
+          {% unless blog_dirs contains dir %}
+            {% assign blog_dirs = blog_dirs | push: dir %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
     
     {% if blog_dirs.size > 0 %}
       <div class="directory-sections">
@@ -73,8 +75,9 @@ author_profile: true
       </div>
       
       <!-- Root level posts -->
-      {% assign root_posts = site.blog | where_exp: "item", "item.path contains '_blog/' and item.path | split: '/' | size <= 2" %}
-      {% if root_posts.size > 0 %}
+      {% if site.blog.size > 0 %}
+        {% assign root_posts = site.blog | where_exp: "item", "item.path contains '_blog/'" | where_exp: "item", "item.path | split: '/' | size <= 3" %}
+        {% if root_posts.size > 0 %}
         <div class="directory-section">
           <h3>Other Posts</h3>
           <div class="blog-posts-grid">
@@ -108,7 +111,10 @@ author_profile: true
           </div>
         </div>
       {% endif %}
-    {% else %}
+      {% endif %}
+    {% endif %}
+    
+    {% if blog_dirs.size == 0 and site.blog.size == 0 %}
       <p class="notice--info">Blog content coming soon! You can add blog posts by importing your Obsidian vault using the Python script in _scripts/obsidian_to_website.py</p>
     {% endif %}
   </div>

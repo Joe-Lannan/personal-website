@@ -302,6 +302,16 @@ defaults:
       share: true
       comments: true
       toc: true
+      
+  # Excalidraw files
+  - scope:
+      path: "**/*.excalidraw.md"
+    values:
+      layout: excalidraw
+      author_profile: true
+      share: true
+      comments: false
+      toc: false
 
 # Sass/SCSS
 sass:

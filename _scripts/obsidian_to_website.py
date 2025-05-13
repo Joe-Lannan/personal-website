@@ -56,6 +56,34 @@ def extract_frontmatter(content):
     
     return frontmatter, remaining_content
 
+def is_excalidraw_file(content):
+    """Check if the file is an Excalidraw document"""
+    try:
+        # Look for the Excalidraw JSON pattern at the start of the content
+        excalidraw_pattern = re.compile(r'\s*{[\s\n]*"type"\s*:\s*"excalidraw"', re.DOTALL)
+        return bool(excalidraw_pattern.match(content))
+    except:
+        return False
+
+def extract_excalidraw_json(content):
+    """Extract Excalidraw JSON data from the content"""
+    try:
+        # Find the first opening brace
+        start_idx = content.find('{')
+        if start_idx == -1:
+            return None
+            
+        # Parse the JSON content
+        json_content = content[start_idx:]
+        excalidraw_data = json.loads(json_content)
+        
+        if excalidraw_data.get('type') == 'excalidraw':
+            return excalidraw_data
+        return None
+    except Exception as e:
+        print(f"Error extracting Excalidraw data: {e}")
+        return None
+
 def extract_links(content):
     """Extract wiki-style links from markdown content"""
     links = []
@@ -142,6 +170,12 @@ def process_markdown_file(file_path, vault_path, output_dir, image_dir, link_gra
         
         with open(file_path, 'r', encoding='utf-8') as file:
             content = file.read()
+            
+        # Check if this is an Excalidraw file
+        is_excalidraw = is_excalidraw_file(content) or filename.endswith('.excalidraw.md')
+        excalidraw_data = None
+        if is_excalidraw:
+            excalidraw_data = extract_excalidraw_json(content)
         
         # Extract frontmatter and content
         frontmatter, md_content = extract_frontmatter(content)
@@ -196,8 +230,12 @@ def process_markdown_file(file_path, vault_path, output_dir, image_dir, link_gra
             'categories': frontmatter.get('categories', []),
             'tags': tags,
             'original_path': rel_path,
-            'layout': 'single'
+            'layout': 'single' if not is_excalidraw else 'excalidraw'
         }
+        
+        # Add Excalidraw data if present
+        if is_excalidraw and excalidraw_data:
+            jekyll_frontmatter['excalidraw_json'] = excalidraw_data
         
         # Convert wikilinks to Jekyll links
         for link in links:
@@ -227,7 +265,16 @@ def process_markdown_file(file_path, vault_path, output_dir, image_dir, link_gra
         
         # Write output file
         with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(jekyll_content)
+            # If this is an Excalidraw file, add a note at the top
+            if is_excalidraw:
+                f.write(f"---\n{yaml.dump(jekyll_frontmatter)}---\n\n")
+                f.write("This is an Excalidraw diagram. The visualization is rendered above.\n\n")
+                f.write("## Notes\n\n")
+                # Extract any text content outside the JSON
+                if md_content.strip() and not md_content.strip().startswith('{'):
+                    f.write(md_content)
+            else:
+                f.write(jekyll_content)
         
         return True
     except Exception as e:
@@ -293,6 +340,15 @@ def process_vault(args):
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(image_dir, exist_ok=True)
     os.makedirs(os.path.dirname(graph_output), exist_ok=True)
+    
+    # Ensure we have the necessary libraries 
+    try:
+        import json
+        import yaml
+    except ImportError as e:
+        print(f"Error: Required library not found: {e}")
+        print("Please install required libraries using: pip install pyyaml")
+        sys.exit(1)
     
     # Get exclude directories
     exclude_dirs = [d.strip() for d in args.exclude.split(',')]
