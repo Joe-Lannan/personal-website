@@ -4,13 +4,14 @@
 // Improved version with better organization and styling
 
 document.addEventListener('DOMContentLoaded', function() {
-  const username = 'Joe-Lannan'; // Your GitHub username
+  const usernames = ['joe-lannan', 'koinslot-inc']; // GitHub accounts to fetch repos from
   const container = document.getElementById('github-projects-container');
   const maxRepos = 9; // Maximum number of repositories to show
-  const featuredRepos = ['koinslot', 'PyOpenMV', 'ardoino', 'Command-Line-Slide-Deck', 'jwlcms']; // Featured repositories
+  const featuredRepos = ['koinslot', 'PyOpenMV', 'ardoino', 'Command-Line-Slide-Deck', 'jwlcms', 'kywy']; // Featured repositories
   // Custom logos for repositories (repo name -> logo file path)
   const repoLogos = {
     'koinslot': '/images/koinslot-logo.png',
+    'kywy': '/images/koinslot-logo.png',
     'PyOpenMV': '/images/site-logo.png',
     'ardoino': '/images/site-logo.png',
     'jwlcms': '/images/site-logo.png'
@@ -22,9 +23,33 @@ document.addEventListener('DOMContentLoaded', function() {
   
   container.appendChild(loadingElement);
   
-  fetchRepositories(username)
+  fetchAllRepositories(usernames)
     .then(repos => displayRepositories(repos, featuredRepos, maxRepos, repoLogos))
     .catch(handleError);
+  
+  function fetchAllRepositories(usernames) {
+    const promises = usernames.map(username => {
+      return fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc&per_page=100`)
+        .then(response => {
+          if (!response.ok) {
+            console.error(`GitHub API error for ${username}: ${response.status}`);
+            return []; // Return empty array for this username if there's an error
+          }
+          return response.json();
+        })
+        .catch(error => {
+          console.error(`Error fetching repositories for ${username}:`, error);
+          return []; // Return empty array for this username if there's an error
+        });
+    });
+    
+    // Combine all repositories from different accounts
+    return Promise.all(promises)
+      .then(repoArrays => {
+        // Flatten the array of arrays into a single array of repositories
+        return repoArrays.flat();
+      });
+  }
   
   function fetchRepositories(username) {
     return fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc&per_page=100`)
@@ -236,7 +261,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function handleError(error) {
-    container.removeChild(loadingElement);
+    if (container.contains(loadingElement)) {
+      container.removeChild(loadingElement);
+    }
     
     const errorMessage = document.createElement('p');
     errorMessage.className = 'error-message';
@@ -244,6 +271,21 @@ document.addEventListener('DOMContentLoaded', function() {
     container.appendChild(errorMessage);
     
     console.error('Error loading GitHub repositories:', error);
+    
+    // Try to fetch repositories from each account individually as a fallback
+    const usernames = ['joe-lannan', 'koinslot-inc'];
+    const promises = usernames.map(username => fetchRepositories(username).catch(() => []));
+    
+    Promise.all(promises)
+      .then(repoArrays => {
+        const repos = repoArrays.flat();
+        if (repos.length > 0) {
+          // If we got any repositories, clear the error and display them
+          container.removeChild(errorMessage);
+          displayRepositories(repos, featuredRepos, maxRepos, repoLogos);
+        }
+      })
+      .catch(e => console.error('Fallback fetch failed:', e));
   }
 });
 
