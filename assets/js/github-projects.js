@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const container = document.getElementById('github-projects-container');
   const maxRepos = 6; // Maximum number of repositories to show
   const featuredRepos = ['project1', 'project2', 'project3']; // Add your featured repo names here
+  // Custom logos for repositories (repo name -> logo file path)
+  const repoLogos = {
+    'koinslot': '/images/repo-logos/koinslot.png',
+    // Add more repos and their logo paths here
+  };
   const loadingElement = document.createElement('p');
   loadingElement.textContent = 'Loading GitHub repositories...';
   
@@ -16,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
   container.appendChild(loadingElement);
   
   fetchRepositories(username)
-    .then(repos => displayRepositories(repos, featuredRepos, maxRepos))
+    .then(repos => displayRepositories(repos, featuredRepos, maxRepos, repoLogos))
     .catch(handleError);
   
   function fetchRepositories(username) {
@@ -29,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
   
-  function displayRepositories(repos, featuredRepos, maxRepos) {
+  function displayRepositories(repos, featuredRepos, maxRepos, repoLogos) {
     // Remove loading message
     container.removeChild(loadingElement);
     
@@ -55,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Display repositories
     filteredRepos.forEach(repo => {
-      const repoElement = createRepoElement(repo);
+      const repoElement = createRepoElement(repo, repoLogos);
       gridWrapper.appendChild(repoElement);
     });
 
@@ -96,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  function createRepoElement(repo) {
+  function createRepoElement(repo, repoLogos) {
     const gridItem = document.createElement('div');
     gridItem.className = 'grid__item';
     
@@ -105,17 +110,22 @@ document.addEventListener('DOMContentLoaded', function() {
     gridItem.appendChild(archiveItem);
     
     // Add thumbnail/image if available
-    if (repo.owner && repo.owner.avatar_url) {
-      const imageContainer = document.createElement('div');
-      imageContainer.className = 'archive__item-teaser';
-      
-      // Try to get a repository image, fallback to owner avatar
-      const img = document.createElement('img');
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'archive__item-teaser';
+    
+    // Try to use custom logo if available, fallback to owner avatar
+    const img = document.createElement('img');
+    if (repoLogos && repoLogos[repo.name]) {
+      img.src = repoLogos[repo.name];
+      img.className = 'custom-repo-logo';
+    } else if (repo.owner && repo.owner.avatar_url) {
       img.src = repo.owner.avatar_url;
-      img.alt = `${repo.name} thumbnail`;
-      imageContainer.appendChild(img);
-      archiveItem.appendChild(imageContainer);
+    } else {
+      img.src = '/images/site-logo.png'; // Default fallback
     }
+    img.alt = `${repo.name} thumbnail`;
+    imageContainer.appendChild(img);
+    archiveItem.appendChild(imageContainer);
     
     const archiveItemBody = document.createElement('div');
     archiveItemBody.className = 'archive__item-body';
@@ -269,7 +279,14 @@ style.textContent = `
   .archive__item-teaser img {
     height: 100%;
     width: auto;
-    object-fit: cover;
+    object-fit: contain;
+    padding: 5px;
+  }
+  
+  .custom-repo-logo {
+    max-width: 80%;
+    max-height: 80%;
+    margin: auto;
   }
   
   .archive__item-body {

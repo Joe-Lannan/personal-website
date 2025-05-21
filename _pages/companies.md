@@ -11,7 +11,7 @@ author_profile: true
 
 ## Koinslot INC (2022 - Present)
 
-![Koinslot Logo](/images/koinslot-logo.jpg)
+![Koinslot Logo](/images/koinslot-logo.png)
 
 [Koinslot](http://koinslotkywy.com) is a company I co-founded to produce a nostalgic gaming system with a focus on education. We've received initial funding and have contracted with Betabox INC to use our system in educational settings.
 
@@ -31,8 +31,6 @@ Visit us at [kywy.io](http://kywy.io)
 ---
 
 ## Sonar Applications INC (2020 - 2022)
-
-![Sonar App Logo](/images/sonar-logo.jpg)
 
 [Sonar Applications](https://www.sonarmobileapp.com) was an audio-focused social media application I developed with my brother, Ethan Lannan. The app reached approximately 1,000 beta testers before the project was temporarily paused to pursue Koinslot.
 
