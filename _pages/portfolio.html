@@ -85,6 +85,10 @@ author_profile: true
     <div class="loading-message">
       <p><i class="fa fa-spinner fa-spin"></i> Loading GitHub repositories from joe-lannan and koinslot-inc...</p>
       <p>Please wait while we load the repository data. This should only take a moment.</p>
+      <!-- Link to raw data for debugging -->
+      <p style="font-size: 0.8em; margin-top: 15px;">
+        <a href="{{ base_path }}/assets/data/github-repos.json" target="_blank">View raw repository data</a>
+      </p>
     </div>
   </div>
 
@@ -142,5 +146,10 @@ author_profile: true
   `;
   document.head.appendChild(style);
 </script>
+<script>
+// Add base path variable for JavaScript to use
+window.basePath = '{{ base_path }}/';
+</script>
 <script src="{{ base_path }}/assets/js/github-projects.js"></script>
+<script src="{{ base_path }}/assets/js/test-repo-loading.js"></script>
 
