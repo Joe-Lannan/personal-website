@@ -75,9 +75,9 @@ author_profile: true
 
 <div class="portfolio-section github-projects">
   <div class="section-header">
-    <h2>Featured GitHub Repositories</h2>
-    <p>Below are my featured GitHub repositories, automatically fetched from my GitHub profile.</p>
-    <p>These repositories showcase my work in biophysics research, software development, and hardware projects.</p>
+    <h2>GitHub Repositories by Size</h2>
+    <p>Below are repositories from my GitHub profiles: github.com/joe-lannan and github.com/koinslot-inc, sorted by size.</p>
+    <p>These repositories include my work in biophysics research, software development, and hardware projects.</p>
   </div>
   
   <!-- Container for dynamically loaded GitHub repositories -->
@@ -98,17 +98,7 @@ author_profile: true
   </div>
 </div>
 
-<div class="portfolio-section projects">
-  <div class="section-header">
-    <h2>GitHub Projects</h2>
-  </div>
-  <div class="grid__wrapper">
-  {% assign github_projects = site.portfolio | where: "categories", "project" | sort: "date" | reverse %}
-  {% for post in github_projects %}
-    {% include archive-single.html type="grid" %}
-  {% endfor %}
-  </div>
-</div>
+
 
 <!-- Load the JavaScript files -->
 <script src="{{ base_path }}/assets/js/github-heatmap.js"></script>

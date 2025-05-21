@@ -1,20 +1,16 @@
 // GitHub Repository Loader
 // This script fetches and displays repositories from GitHub API
 // Place this in assets/js/github-projects.js
-// Improved version with better organization and styling
+// Shows all repositories sorted by size
 
 document.addEventListener('DOMContentLoaded', function() {
   const usernames = ['joe-lannan', 'koinslot-inc']; // GitHub accounts to fetch repos from
   const container = document.getElementById('github-projects-container');
-  const maxRepos = 9; // Maximum number of repositories to show
-  const featuredRepos = ['koinslot', 'PyOpenMV', 'ardoino', 'Command-Line-Slide-Deck', 'jwlcms', 'kywy']; // Featured repositories
+  const maxRepos = 100; // Show many repositories
   // Custom logos for repositories (repo name -> logo file path)
   const repoLogos = {
     'koinslot': '/images/koinslot-logo.png',
-    'kywy': '/images/koinslot-logo.png',
-    'PyOpenMV': '/images/site-logo.png',
-    'ardoino': '/images/site-logo.png',
-    'jwlcms': '/images/site-logo.png'
+    'kywy': '/images/koinslot-logo.png'
   };
   const loadingElement = document.createElement('p');
   loadingElement.textContent = 'Loading GitHub repositories...';
@@ -24,12 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
   container.appendChild(loadingElement);
   
   fetchAllRepositories(usernames)
-    .then(repos => displayRepositories(repos, featuredRepos, maxRepos, repoLogos))
+    .then(repos => displayRepositories(repos, null, maxRepos, repoLogos))
     .catch(handleError);
   
   function fetchAllRepositories(usernames) {
     const promises = usernames.map(username => {
-      return fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc&per_page=100`)
+      return fetch(`https://api.github.com/users/${username}/repos?sort=size&direction=desc&per_page=100`)
         .then(response => {
           if (!response.ok) {
             console.error(`GitHub API error for ${username}: ${response.status}`);
@@ -52,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function fetchRepositories(username) {
-    return fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc&per_page=100`)
+    return fetch(`https://api.github.com/users/${username}/repos?sort=size&direction=desc&per_page=100`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`GitHub API returned ${response.status}`);
@@ -63,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function displayRepositories(repos, featuredRepos, maxRepos, repoLogos) {
     // Remove loading message
-    container.removeChild(loadingElement);
+    if (container.contains(loadingElement)) {
+      container.removeChild(loadingElement);
+    }
     
     if (!repos || repos.length === 0) {
       const noReposMessage = document.createElement('p');
@@ -72,13 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Sort repos by priority: featured first, then by stars/updated date
-    const sortedRepos = sortRepositories(repos, featuredRepos);
+    // Sort repos by size (largest first)
+    const sortedRepos = repos.sort((a, b) => b.size - a.size);
     
-    // Filter out forked repos and limit to maxRepos
-    const filteredRepos = sortedRepos
-      .filter(repo => !repo.fork)
-      .slice(0, maxRepos);
+    // Include all repos but limit to maxRepos
+    const filteredRepos = sortedRepos.slice(0, maxRepos);
     
     // Create grid wrapper
     const gridWrapper = document.createElement('div');
@@ -91,14 +87,21 @@ document.addEventListener('DOMContentLoaded', function() {
       gridWrapper.appendChild(repoElement);
     });
 
-    // Add "View more on GitHub" button if there are more repos
-    if (sortedRepos.filter(repo => !repo.fork).length > maxRepos) {
-      const viewMoreLink = document.createElement('div');
-      viewMoreLink.className = 'view-more-container';
-      viewMoreLink.innerHTML = `<a href="https://github.com/${username}?tab=repositories" 
-        class="btn btn--primary view-more-btn">View more on GitHub</a>`;
-      container.appendChild(viewMoreLink);
-    }
+    // Add "View more on GitHub" buttons for each account
+    const viewMoreContainer = document.createElement('div');
+    viewMoreContainer.className = 'view-more-container';
+    
+    // Add buttons for each username
+    usernames.forEach(username => {
+      const viewMoreBtn = document.createElement('a');
+      viewMoreBtn.href = `https://github.com/${username}?tab=repositories`;
+      viewMoreBtn.className = 'btn btn--primary view-more-btn';
+      viewMoreBtn.textContent = `View more from ${username}`;
+      viewMoreBtn.style.margin = '0 10px';
+      viewMoreContainer.appendChild(viewMoreBtn);
+    });
+    
+    container.appendChild(viewMoreContainer);
     
     // Add last updated information
     const lastUpdated = document.createElement('p');
@@ -107,25 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
     container.appendChild(lastUpdated);
   }
   
-  function sortRepositories(repos, featuredRepos) {
-    // First prioritize featured repos, then sort by stars and update date
-    return repos.sort((a, b) => {
-      // Check if either repo is in featured list
-      const aIsFeatured = featuredRepos.includes(a.name);
-      const bIsFeatured = featuredRepos.includes(b.name);
-      
-      // If one is featured and the other isn't, the featured one comes first
-      if (aIsFeatured && !bIsFeatured) return -1;
-      if (!aIsFeatured && bIsFeatured) return 1;
-      
-      // If both are featured/non-featured, compare stars
-      if (a.stargazers_count !== b.stargazers_count) {
-        return b.stargazers_count - a.stargazers_count; // More stars first
-      }
-      
-      // If stars are the same, sort by update date
-      return new Date(b.updated_at) - new Date(a.updated_at);
-    });
+  function sortRepositories(repos) {
+    // Simply sort by size (largest first)
+    return repos.sort((a, b) => b.size - a.size);
   }
   
   function createRepoElement(repo, repoLogos) {
@@ -148,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (repo.owner && repo.owner.avatar_url) {
       img.src = repo.owner.avatar_url;
     } else {
-      img.src = '/images/site-logo.png'; // Default fallback
+      img.src = '/images/favicon-192x192.png'; // Default fallback
     }
     img.alt = `${repo.name} thumbnail`;
     imageContainer.appendChild(img);
@@ -205,10 +192,13 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     excerpt.appendChild(stats);
     
-    // Updated date (separate from stats for square layout)
+    // Add updated date and size (separate from stats for square layout)
     const updatedDate = document.createElement('div');
     updatedDate.className = 'repo-updated';
-    updatedDate.innerHTML = `<i class="fa fa-calendar" aria-hidden="true"></i> ${new Date(repo.updated_at).toLocaleDateString()}`;
+    updatedDate.innerHTML = `
+      <i class="fa fa-calendar" aria-hidden="true"></i> ${new Date(repo.updated_at).toLocaleDateString()} 
+      <i class="fa fa-database" aria-hidden="true"></i> ${formatRepoSize(repo.size)}
+    `;
     excerpt.appendChild(updatedDate);
     
     // Topics
@@ -260,6 +250,15 @@ document.addEventListener('DOMContentLoaded', function() {
     return gridItem;
   }
   
+  // Helper function to format repository size
+  function formatRepoSize(sizeInKB) {
+    if (sizeInKB < 1000) {
+      return `${sizeInKB} KB`;
+    } else {
+      return `${(sizeInKB / 1024).toFixed(1)} MB`;
+    }
+  }
+
   function handleError(error) {
     if (container.contains(loadingElement)) {
       container.removeChild(loadingElement);
@@ -273,8 +272,13 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Error loading GitHub repositories:', error);
     
     // Try to fetch repositories from each account individually as a fallback
-    const usernames = ['joe-lannan', 'koinslot-inc'];
-    const promises = usernames.map(username => fetchRepositories(username).catch(() => []));
+    const promises = usernames.map(username => 
+      fetchRepositories(username)
+        .catch(err => {
+          console.error(`Failed to fetch repos for ${username}:`, err);
+          return [];
+        })
+    );
     
     Promise.all(promises)
       .then(repoArrays => {
@@ -282,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (repos.length > 0) {
           // If we got any repositories, clear the error and display them
           container.removeChild(errorMessage);
-          displayRepositories(repos, featuredRepos, maxRepos, repoLogos);
+          displayRepositories(repos, null, maxRepos, repoLogos);
         }
       })
       .catch(e => console.error('Fallback fetch failed:', e));
@@ -458,10 +462,11 @@ style.textContent = `
   }
   
   .view-more-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
   
   .view-more-btn {
     padding: 10px 20px;
