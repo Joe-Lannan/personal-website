@@ -9,6 +9,10 @@ redirect_from:
 
 {% include base_path %}
 
+PDF Version
+======
+[Download PDF](/files/Resume_CV_Joseph_Lannan.pdf)
+
 Education
 ======
 * Ph.D in Physics, North Carolina State University, 2025 (expected)
@@ -32,7 +36,7 @@ Work experience
 * 2020 - 2022: Technical Director
   * Sonar Applications INC
   * Built audio social media app with approximately 1000 beta testers
-  
+
 * 2018 - 2019: Director of Technological Operations
   * [Betabox Learning](https://betaboxlearning.com)
   * Managed IT systems, programming, web design, electronics, and teaching K-12
@@ -67,9 +71,9 @@ Skills
 
 Publications & Preprints
 ======
-* **Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum***  
-  Joseph Lannan, Carlos Floyd, L. X. Xu, Connie Yan, Wallace F. Marshall, Surirayanarayanan Vaikuntanathan, Aaron R. Dinner, Jerry E. Honts, Saad Bhamla, and Mary Williard Elting  
-  Biorxiv (2025)  
+* **Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum***
+  Joseph Lannan, Carlos Floyd, L. X. Xu, Connie Yan, Wallace F. Marshall, Surirayanarayanan Vaikuntanathan, Aaron R. Dinner, Jerry E. Honts, Saad Bhamla, and Mary Williard Elting
+  Biorxiv (2025)
   doi: [https://doi.org/10.1101/2024.11.07.622534](https://doi.org/10.1101/2024.11.07.622534)
 ---
 layout: archive
@@ -104,7 +108,7 @@ Work experience
 * 2020 - 2022: Technical Director
   * Sonar Applications INC
   * Developed an audio social media app with approximately 1000 beta testers
-  
+
 * 2019 - 2020: Teaching Assistant
   * North Carolina State University, Physics Department
   * Taught physics labs for undergraduate engineering students
@@ -137,7 +141,7 @@ Skills
   * Mathematica - Physics problem-solving, numerical analysis
   * MATLAB - Automation, computer vision, data analysis
   * C/C++ - Microcontroller programming
-  
+
 * Fabrication
   * 3D Printing - FDM and SLA printers, 3D modeling
   * Electronics - Circuit design, PCB fabrication, soldering
@@ -161,24 +165,24 @@ Skills
 
 Publications
 ======
-* **Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum***  
-  Joseph Lannan, Carlos Floyd, L. X. Xu, Connie Yan, Wallace F. Marshall, Surirayanarayanan Vaikuntanathan, Aaron R. Dinner, Jerry E. Honts, Saad Bhamla, and Mary Williard Elting  
-  Biorxiv (2025)  
+* **Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum***
+  Joseph Lannan, Carlos Floyd, L. X. Xu, Connie Yan, Wallace F. Marshall, Surirayanarayanan Vaikuntanathan, Aaron R. Dinner, Jerry E. Honts, Saad Bhamla, and Mary Williard Elting
+  Biorxiv (2025)
   doi: [https://doi.org/10.1101/2024.11.07.622534](https://doi.org/10.1101/2024.11.07.622534)
 
 * **Culture and imaging techniques for the study of the ultrafast giant cell *Spirostomum ambiguum*** (In progress)
-  
+
 Conferences & Presentations
 ======
 * American Society for Cell Biology San Diego (2024)
   * Poster and oral presentation: "Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum*"
-  
+
 * Triangle Cytoskeleton Raleigh (2024)
   * Poster presentation: "Fishnet mesh of centrin-Sfi1 drives ultrafast calcium-activated contraction of the giant cell *Spirostomum ambiguum*"
-  
+
 * Betabox Learning Corner, Invited Speaker (2024)
   * General public talk about science for K-12 school teachers
-  
+
 * MBL Whitman Researcher Woods Hole (2024)
   * Research on *Spirostomum ambiguum* using microinjection, birefringence microscopy, and FLIM
 
@@ -187,24 +191,24 @@ Conferences & Presentations
 
 * American Physical Society March Meeting Las Vegas (2023)
   * Talk: "Ultrafast contraction: Investigating the structures underlying myoneme force generating networks in Spirostomum sp."
-  
+
 Leadership & Additional Experience
 ======
 * Lab Mentor (2020-Present)
   * Mentored multiple undergraduate researchers on the *Spirostomum* project
   * Students include Noah Love, DJ Teasley, Vineet Krishna, Copeland Lachapelle, and Grant Sherrill
-  
+
 * Physics Tutor (2020-Present)
   * Tutored multiple students struggling with physics
 
 * Physics Senior Design Mentor (2023)
   * Mentored a group of three senior undergraduates on their capstone project
   * Project focused on building a computer vision tracking system for TEM samples
-  
+
 * AFM Super User (2020-2025)
   * Maintained and supported an Asylum MFP-3D AFM
   * Assisted course instructors in teaching AFM techniques
-  
+
 * 3D Printer Super User (2020-2025)
   * Maintained and supported a Prusa MK3S+ 3D printer
 
@@ -225,7 +229,7 @@ Certificates & Awards
 Companies Founded
 ======
 * Koinslot INC. (2022)
-  * President and co-founder 
+  * President and co-founder
   * Producer of nostalgic gaming systems for education
 
 * Sonar Applications INC. (2020)
