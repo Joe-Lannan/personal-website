@@ -1,11 +1,10 @@
 // GitHub Repository Loader
-// This script fetches repositories directly from GitHub API
+// This script loads repositories from a static JSON file generated at build time
 // Place this in assets/js/github-projects.js
 // Shows all repositories sorted by size
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log("GitHub Projects script loaded");
-  const usernames = ['joe-lannan', 'koinslot-inc']; // GitHub accounts to fetch repos from
   const container = document.getElementById('github-projects-container');
   console.log("Container found:", container);
   const maxRepos = 100; // Show many repositories
@@ -24,69 +23,42 @@ document.addEventListener('DOMContentLoaded', function() {
   
   container.appendChild(loadingElement);
   
-  console.log("Fetching repositories directly from GitHub API");
-  fetchAllRepositories(usernames)
+  console.log("Loading repositories from static JSON file");
+  loadRepositoriesFromStaticFile()
     .then(repos => {
       console.log("Repositories loaded:", repos.length);
       displayRepositories(repos, null, maxRepos, repoLogos);
     })
     .catch(handleError);
   
-  function fetchAllRepositories(usernames) {
-    console.log("Fetching repositories for:", usernames);
-    const promises = usernames.map(username => {
-      return fetchRepositoriesForUser(username);
-    });
-    
-    // Combine all repositories from different accounts
-    return Promise.all(promises)
-      .then(repoArrays => {
-        // Flatten the array of arrays into a single array of repositories
-        const allRepos = repoArrays.flat();
-        console.log(`Total repositories fetched: ${allRepos.length}`);
-        return allRepos;
-      });
-  }
-  
-  function fetchRepositoriesForUser(username) {
-    console.log(`Fetching repositories for ${username}...`);
-    return fetch(`https://api.github.com/users/${username}/repos?sort=size&direction=desc&per_page=100`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json'
-      },
-      cache: 'no-store'
-    })
+  function loadRepositoriesFromStaticFile() {
+    console.log("Fetching repositories from static file");
+    return fetch('/assets/data/github-repos.json')
       .then(response => {
-        console.log(`Response for ${username}:`, response.status, response.statusText);
-        
-        // Check for rate limit headers
-        const rateLimit = response.headers.get('X-RateLimit-Limit');
-        const rateRemaining = response.headers.get('X-RateLimit-Remaining');
-        const rateReset = response.headers.get('X-RateLimit-Reset');
-        
-        if (rateLimit && rateRemaining && rateReset) {
-          console.log(`GitHub API Rate Limit: ${rateRemaining}/${rateLimit} remaining. Resets at ${new Date(rateReset * 1000).toLocaleTimeString()}`);
-          
-          if (parseInt(rateRemaining) === 0) {
-            const resetDate = new Date(rateReset * 1000);
-            const minutesUntilReset = Math.ceil((resetDate - new Date()) / 60000);
-            console.error(`GitHub API rate limit exceeded. Resets in ${minutesUntilReset} minutes at ${resetDate.toLocaleTimeString()}`);
-            throw new Error(`GitHub API rate limit exceeded. Please try again in ${minutesUntilReset} minutes.`);
-          }
-        }
+        console.log("Static JSON response:", response.status, response.statusText);
         
         if (!response.ok) {
-          console.error(`GitHub API error for ${username}: ${response.status}`);
-          return []; // Return empty array for this username if there's an error
+          console.error(`Error loading static JSON file: ${response.status}`);
+          throw new Error(`Failed to load repository data (${response.status})`);
         }
         return response.json().then(data => {
-          console.log(`Fetched ${data.length} repositories for ${username}`);
+          console.log(`Loaded ${data.length} repositories from static file`);
+          
+          // Add source information to each repo
+          data = data.map(repo => {
+            // Add a source property to help identify which account each repo belongs to
+            if (repo.owner && repo.owner.login) {
+              repo.source = repo.owner.login;
+            }
+            return repo;
+          });
+          
           return data;
         });
       })
       .catch(error => {
-        console.error(`Error fetching repositories for ${username}:`, error);
-        return []; // Return empty array for this username if there's an error
+        console.error(`Error loading static repository data:`, error);
+        throw error;
       });
   }
   
@@ -103,6 +75,25 @@ document.addEventListener('DOMContentLoaded', function() {
     if (container.contains(loadingElement)) {
       container.removeChild(loadingElement);
     }
+    
+    // Try to fetch and display the last updated time
+    fetch('/assets/data/repos-updated.json')
+      .then(response => response.json())
+      .then(data => {
+        if (data.updated_at) {
+          const updatedDate = new Date(data.updated_at);
+          const updatedMsg = document.createElement('p');
+          updatedMsg.className = 'repos-last-updated';
+          updatedMsg.style.textAlign = 'right';
+          updatedMsg.style.fontSize = '0.8em';
+          updatedMsg.style.fontStyle = 'italic';
+          updatedMsg.style.color = '#666';
+          updatedMsg.style.margin = '0 0 20px 0';
+          updatedMsg.textContent = `Repository data last updated: ${updatedDate.toLocaleDateString()} ${updatedDate.toLocaleTimeString()}`;
+          container.appendChild(updatedMsg);
+        }
+      })
+      .catch(err => console.log('Could not fetch update timestamp', err));
     
     if (!repos || repos.length === 0) {
       console.warn("No repositories found to display");
@@ -149,8 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const viewMoreContainer = document.createElement('div');
     viewMoreContainer.className = 'view-more-container';
     
-    // Add buttons for each username
-    usernames.forEach(username => {
+    // Add buttons for joe-lannan and koinslot-inc
+    ['joe-lannan', 'koinslot-inc'].forEach(username => {
       const viewMoreBtn = document.createElement('a');
       viewMoreBtn.href = `https://github.com/${username}?tab=repositories`;
       viewMoreBtn.className = 'btn btn--primary view-more-btn';
@@ -161,11 +152,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     container.appendChild(viewMoreContainer);
     
-    // Add last updated information
-    const lastUpdated = document.createElement('p');
-    lastUpdated.className = 'last-updated';
-    lastUpdated.textContent = `Last updated: ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`;
-    container.appendChild(lastUpdated);
+    // Add information about the current display
+    const displayInfo = document.createElement('p');
+    displayInfo.className = 'repos-display-info';
+    displayInfo.textContent = `Showing ${filteredRepos.length} repositories`;
+    displayInfo.style.textAlign = 'right';
+    displayInfo.style.fontSize = '0.8em';
+    displayInfo.style.color = '#666';
+    displayInfo.style.margin = '20px 0 0 0';
+    container.appendChild(displayInfo);
     
     console.log("Repository display completed");
   }
@@ -179,6 +174,13 @@ document.addEventListener('DOMContentLoaded', function() {
   function createRepoElement(repo, repoLogos) {
     const gridItem = document.createElement('div');
     gridItem.className = 'grid__item';
+    
+    // Add source as data attribute
+    if (repo.source) {
+      gridItem.dataset.source = repo.source;
+    } else if (repo.owner && repo.owner.login) {
+      gridItem.dataset.source = repo.owner.login;
+    }
     
     const archiveItem = document.createElement('div');
     archiveItem.className = 'archive__item';
@@ -357,8 +359,8 @@ document.addEventListener('DOMContentLoaded', function() {
       container.innerHTML = '';
       container.appendChild(loadingElement);
       
-      // Try fetching again
-      fetchAllRepositories(['joe-lannan', 'koinslot-inc'])
+      // Try loading again
+      loadRepositoriesFromStaticFile()
         .then(repos => {
           if (repos && repos.length > 0) {
             displayRepositories(repos, null, maxRepos, repoLogos);
@@ -370,86 +372,49 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     container.appendChild(retryButton);
     
-    // Try again with direct fetching from individual accounts
-    console.log("Attempting to fetch repositories for each account individually");
+    // Try with local fallback data
+    console.log("Loading fallback repository data");
     
-    const usernames = ['joe-lannan', 'koinslot-inc'];
-    const promises = usernames.map(username => {
-      // Try with a reduced number of repos and add a delay to avoid rate limit issues
-      return new Promise(resolve => {
-        setTimeout(() => {
-          fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
-            headers: {
-              'Accept': 'application/vnd.github.v3+json'
-            },
-            cache: 'no-store'
-          })
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              // Check if this is a rate limit issue
-              const rateRemaining = response.headers.get('X-RateLimit-Remaining');
-              if (rateRemaining && parseInt(rateRemaining) === 0) {
-                console.log('Rate limit reached in fallback fetch');
-              }
-              return [];
-            }
-          })
-          .then(data => resolve(data))
-          .catch(() => resolve([]));
-        }, username === 'koinslot-inc' ? 1000 : 0); // Add delay for second request
-      });
-    });
-    
-    Promise.all(promises)
-      .then(repoArrays => {
-        const repos = repoArrays.flat();
-        if (repos.length > 0) {
-          console.log(`Fallback fetched ${repos.length} repositories`);
-          while (container.firstChild) {
-            container.removeChild(container.firstChild);
-          }
-          displayRepositories(repos, null, maxRepos, repoLogos);
-        } else {
-          // Create some placeholder repositories if all else fails
-          const placeholderRepos = [
-            {
-              name: "personal-website",
-              html_url: "https://github.com/joe-lannan/personal-website",
-              description: "Personal website repository (placeholder - GitHub API failed to load)",
-              size: 5000,
-              stargazers_count: 3,
-              forks_count: 1,
-              language: "JavaScript",
-              updated_at: new Date().toISOString(),
-              topics: ["website", "portfolio"],
-              owner: {
-                login: "joe-lannan",
-                avatar_url: "/images/favicon-192x192.png"
-              }
-            },
-            {
-              name: "koinslot",
-              html_url: "https://github.com/koinslot-inc/koinslot",
-              description: "Koinslot repository (placeholder - GitHub API failed to load)",
-              size: 8000,
-              stargazers_count: 5,
-              forks_count: 2,
-              language: "Python",
-              updated_at: new Date().toISOString(),
-              topics: ["koinslot", "platform"],
-              owner: {
-                login: "koinslot-inc",
-                avatar_url: "/images/koinslot-logo.png"
-              }
-            }
-          ];
-          
-          // Display the placeholder repos
-          displayRepositories(placeholderRepos, null, maxRepos, repoLogos);
+    // Create some placeholder repositories in case the static file failed to load
+    const placeholderRepos = [
+      {
+        name: "personal-website",
+        html_url: "https://github.com/joe-lannan/personal-website",
+        description: "Personal website repository (static data failed to load)",
+        size: 5000,
+        stargazers_count: 3,
+        forks_count: 1,
+        language: "JavaScript",
+        updated_at: new Date().toISOString(),
+        topics: ["website", "portfolio"],
+        owner: {
+          login: "joe-lannan",
+          avatar_url: "/images/favicon-192x192.png"
         }
-      });
+      },
+      {
+        name: "koinslot",
+        html_url: "https://github.com/koinslot-inc/koinslot",
+        description: "Koinslot repository (static data failed to load)",
+        size: 8000,
+        stargazers_count: 5,
+        forks_count: 2,
+        language: "Python",
+        updated_at: new Date().toISOString(),
+        topics: ["koinslot", "platform"],
+        owner: {
+          login: "koinslot-inc",
+          avatar_url: "/images/koinslot-logo.png"
+        }
+      }
+    ];
+    
+    // Display the placeholder repos
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+    displayRepositories(placeholderRepos, null, maxRepos, repoLogos);
+
   }
 });
 

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "personal-website",
+    "html_url": "https://github.com/joe-lannan/personal-website",
+    "description": "Personal website repository (placeholder until GitHub Action runs)",
+    "size": 5000,
+    "stargazers_count": 3,
+    "forks_count": 1,
+    "language": "HTML",
+    "updated_at": "2023-05-15T12:00:00Z",
+    "topics": ["website", "portfolio", "jekyll"],
+    "owner": {
+      "login": "joe-lannan",
+      "avatar_url": "/images/favicon-192x192.png"
+    }
+  },
+  {
+    "name": "koinslot",
+    "html_url": "https://github.com/koinslot-inc/koinslot",
+    "description": "Koinslot repository (placeholder until GitHub Action runs)",
+    "size": 8000,
+    "stargazers_count": 5,
+    "forks_count": 2,
+    "language": "Python",
+    "updated_at": "2023-06-20T15:30:00Z",
+    "topics": ["koinslot", "platform"],
+    "owner": {
+      "login": "koinslot-inc",
+      "avatar_url": "/images/koinslot-logo.png"
+    }
+  }
+]

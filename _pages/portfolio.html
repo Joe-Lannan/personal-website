@@ -84,18 +84,19 @@ author_profile: true
   <div id="github-projects-container">
     <div class="loading-message">
       <p><i class="fa fa-spinner fa-spin"></i> Loading GitHub repositories from joe-lannan and koinslot-inc...</p>
-      <p>Please wait while we fetch the latest repositories. This may take a moment.</p>
+      <p>Please wait while we load the repository data. This should only take a moment.</p>
     </div>
   </div>
 
   <div id="github-error" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
     <h3>Unable to load repositories</h3>
-    <p>We're having trouble connecting to GitHub's API. This could be due to:</p>
+    <p>We're having trouble loading the repository data. This could be due to:</p>
     <ul>
-      <li>GitHub API rate limit (GitHub limits how many requests can be made by visitors)</li>
       <li>Network connectivity issues</li>
+      <li>Problems with the static data file</li>
+      <li>Recent site deployment in progress</li>
     </ul>
-    <p>Please try again later or visit my repositories directly:</p>
+    <p>Please try refreshing the page or visit my repositories directly:</p>
     <p>
       <a href="https://github.com/joe-lannan" target="_blank" class="btn btn--primary">joe-lannan on GitHub</a>
       <a href="https://github.com/koinslot-inc" target="_blank" class="btn btn--primary">koinslot-inc on GitHub</a>
