@@ -11,7 +11,7 @@ author_profile: true
 
 ## Koinslot INC (2022 - Present)
 
-![Koinslot Logo](/images/koinslot-logo.png)
+<img src="/images/koinslot-logo.png" alt="Koinslot Logo" style="width: 200px; height: auto;">
 
 [Koinslot](http://koinslotkywy.com) is a company I co-founded to produce a nostalgic gaming system with a focus on education. We've received initial funding and have contracted with Betabox INC to use our system in educational settings.
 

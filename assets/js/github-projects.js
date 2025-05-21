@@ -6,12 +6,14 @@
 document.addEventListener('DOMContentLoaded', function() {
   const username = 'Joe-Lannan'; // Your GitHub username
   const container = document.getElementById('github-projects-container');
-  const maxRepos = 6; // Maximum number of repositories to show
-  const featuredRepos = ['project1', 'project2', 'project3']; // Add your featured repo names here
+  const maxRepos = 9; // Maximum number of repositories to show
+  const featuredRepos = ['koinslot', 'PyOpenMV', 'ardoino', 'Command-Line-Slide-Deck', 'jwlcms']; // Featured repositories
   // Custom logos for repositories (repo name -> logo file path)
   const repoLogos = {
-    'koinslot': '/images/repo-logos/koinslot.png',
-    // Add more repos and their logo paths here
+    'koinslot': '/images/koinslot-logo.png',
+    'PyOpenMV': '/images/site-logo.png',
+    'ardoino': '/images/site-logo.png',
+    'jwlcms': '/images/site-logo.png'
   };
   const loadingElement = document.createElement('p');
   loadingElement.textContent = 'Loading GitHub repositories...';
@@ -148,7 +150,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Description
     if (repo.description) {
       const description = document.createElement('p');
+      description.className = 'repo-description';
       description.textContent = repo.description;
+      
+      // Truncate description for square layout
+      const maxLength = 60;
+      if (repo.description.length > maxLength) {
+        description.textContent = repo.description.substring(0, maxLength) + '...';
+        description.title = repo.description; // Show full description on hover
+      }
+      
       excerpt.appendChild(description);
     }
     
@@ -166,18 +177,22 @@ document.addEventListener('DOMContentLoaded', function() {
     stats.innerHTML = `
       <span class="repo-stat"><i class="fa fa-star" aria-hidden="true"></i> ${repo.stargazers_count}</span>
       <span class="repo-stat"><i class="fa fa-code-fork" aria-hidden="true"></i> ${repo.forks_count}</span>
-      <span class="repo-stat"><i class="fa fa-eye" aria-hidden="true"></i> ${repo.watchers_count}</span>
-      <div class="repo-updated"><i class="fa fa-calendar" aria-hidden="true"></i> Updated: ${new Date(repo.updated_at).toLocaleDateString()}</div>
     `;
     excerpt.appendChild(stats);
+    
+    // Updated date (separate from stats for square layout)
+    const updatedDate = document.createElement('div');
+    updatedDate.className = 'repo-updated';
+    updatedDate.innerHTML = `<i class="fa fa-calendar" aria-hidden="true"></i> ${new Date(repo.updated_at).toLocaleDateString()}`;
+    excerpt.appendChild(updatedDate);
     
     // Topics
     if (repo.topics && repo.topics.length > 0) {
       const topicsContainer = document.createElement('div');
       topicsContainer.className = 'repo-topics';
       
-      // Limit to first 5 topics to keep UI clean
-      const displayTopics = repo.topics.slice(0, 5);
+      // Limit to first 3 topics for square layout
+      const displayTopics = repo.topics.slice(0, 3);
       
       displayTopics.forEach(topic => {
         const topicSpan = document.createElement('span');
@@ -187,10 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
       // Show count of remaining topics if any
-      if (repo.topics.length > 5) {
+      if (repo.topics.length > 3) {
         const moreTopics = document.createElement('span');
         moreTopics.className = 'repo-topic more-topics';
-        moreTopics.textContent = `+${repo.topics.length - 5} more`;
+        moreTopics.textContent = `+${repo.topics.length - 3} more`;
         topicsContainer.appendChild(moreTopics);
       }
       
@@ -241,7 +256,8 @@ style.textContent = `
   
   .grid__wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 1fr;
     grid-gap: 20px;
     margin-bottom: 20px;
   }
@@ -252,7 +268,7 @@ style.textContent = `
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     overflow: hidden;
-    height: 100%;
+    aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
   }
@@ -269,16 +285,17 @@ style.textContent = `
   }
   
   .archive__item-teaser {
-    height: 80px;
+    height: 100px;
     overflow: hidden;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #f6f8fa;
   }
   
   .archive__item-teaser img {
-    height: 100%;
-    width: auto;
+    height: 70%;
+    width: 70%;
     object-fit: contain;
     padding: 5px;
   }
@@ -298,15 +315,20 @@ style.textContent = `
   
   .archive__item-title {
     margin-top: 0;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    line-height: 1.3;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .archive__item-excerpt {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: calc(100% - 50px);
   }
   
   .repo-stats {
@@ -360,16 +382,20 @@ style.textContent = `
   .repo-topics {
     display: flex;
     flex-wrap: wrap;
-    margin: 10px 0;
+    margin: 5px 0;
   }
   
   .repo-topic {
     background-color: #f1f8ff;
     border-radius: 3px;
     color: #0366d6;
-    font-size: 12px;
-    margin: 0 5px 5px 0;
-    padding: 3px 10px;
+    font-size: 11px;
+    margin: 0 3px 3px 0;
+    padding: 2px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
   }
   
   .more-topics {
@@ -380,11 +406,13 @@ style.textContent = `
   .repo-links {
     display: flex;
     margin-top: auto;
-    padding-top: 15px;
+    padding-top: 8px;
   }
   
   .repo-links a {
-    margin-right: 10px;
+    margin-right: 5px;
+    font-size: 0.85em;
+    padding: 4px 8px;
   }
   
   .view-more-container {
