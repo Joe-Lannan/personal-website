@@ -6,315 +6,312 @@ author_profile: true
 ---
 
 {% include base_path %}
-{% include d3js.html %}
 
 <div class="blog-content">
-  <h2>Knowledge Map</h2>
-  <p>This interactive map shows connections between my notes, research, and thoughts. The visualization demonstrates how different topics relate to each other within my knowledge base.</p>
-  
-  <div id="knowledge-graph-container" class="knowledge-graph-container">
-    <!-- Knowledge graph will be loaded here -->
-    <div class="loading">Loading knowledge graph...</div>
-  </div>
-  
-  <h2>Blog Posts</h2>
-  <p>Welcome to my blog where I share thoughts, ideas, and concepts from my Obsidian vault. Here you'll find a collection of posts organized by topic.</p>
+  <p>Welcome to my blog where I share insights, research findings, and thoughts on biophysics and cellular mechanics.</p>
 
-  <div class="directory-explorer">
-    {% comment %}Get all directories in the blog collection{% endcomment %}
-    {% assign blog_dirs = "" | split: "" %}
-    {% if site.blog.size > 0 %}
-      {% for blog in site.blog %}
-        {% assign path_parts = blog.path | split: "/" %}
-        {% if path_parts.size > 2 %}
-          {% assign dir = path_parts[1] %}
-          {% assign dir_exists = false %}
-          {% for existing_dir in blog_dirs %}
-            {% if existing_dir == dir %}
-              {% assign dir_exists = true %}
-              {% break %}
+  {% if site.posts.size > 0 %}
+    <!-- Recent Posts Section -->
+    <div class="recent-posts-section">
+      <h3>Recent Posts</h3>
+      <div class="blog-posts-grid">
+        {% assign recent_posts = site.posts | sort: 'date' | reverse | limit: 6 %}
+        {% for post in recent_posts %}
+          <div class="blog-card">
+            <h4><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h4>
+            {% if post.excerpt %}
+              <p class="blog-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
             {% endif %}
-          {% endfor %}
-          {% unless dir_exists %}
-            {% assign blog_dirs = blog_dirs | push: dir %}
-          {% endunless %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    
-    {% if blog_dirs.size > 0 %}
-      <div class="directory-sections">
-        {% for dir in blog_dirs %}
-          <div class="directory-section">
-            <h3>{{ dir | capitalize }}</h3>
-            <div class="blog-posts-grid">
-              {% assign dir_posts = site.blog | where_exp: "item", "item.path contains dir" %}
-              {% for post in dir_posts %}
-                <div class="blog-card">
-                  <h4><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h4>
-                  {% if post.excerpt %}
-                    <p class="blog-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+            
+            <div class="blog-metadata">
+              {% if post.tags.size > 0 %}
+                <div class="blog-tags">
+                  {% for tag in post.tags limit:3 %}
+                    <span class="blog-tag">{{ tag | replace: "-", " " }}</span>
+                  {% endfor %}
+                  {% if post.tags.size > 3 %}
+                    <span class="blog-tag">+{{ post.tags.size | minus: 3 }}</span>
                   {% endif %}
-                  
-                  <div class="blog-metadata">
-                    {% if post.tags.size > 0 %}
-                      <div class="blog-tags">
-                        {% for tag in post.tags limit:3 %}
-                          <span class="blog-tag">{{ tag }}</span>
-                        {% endfor %}
-                        {% if post.tags.size > 3 %}
-                          <span class="blog-tag">+{{ post.tags.size | minus: 3 }}</span>
-                        {% endif %}
-                      </div>
-                    {% endif %}
-                    
-                    {% if post.date %}
-                      <div class="blog-date">
-                        <i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | date: "%B %d, %Y" }}
-                      </div>
-                    {% endif %}
-                  </div>
                 </div>
-              {% endfor %}
+              {% endif %}
+              
+              {% if post.date %}
+                <div class="blog-date">
+                  <i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | date: "%b %d, %Y" }}
+                </div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
       </div>
-      
-      <!-- Root level posts -->
-      {% if site.blog.size > 0 %}
-        {% assign all_blog_posts = site.blog | where_exp: "item", "item.path contains '_blog/'" %}
-        {% assign root_posts = '' | split: '' %}
-        {% for post in all_blog_posts %}
-          {% assign path_parts = post.path | split: "/" %}
-          {% if path_parts.size <= 3 %}
-            {% assign root_posts = root_posts | push: post %}
+    </div>
+
+    <!-- Posts by Tag Section -->
+    <div class="tags-section">
+      <h3>Browse by Tag</h3>
+      {% comment %}Get all tags from posts{% endcomment %}
+      {% assign all_tags = "" | split: "" %}
+      {% for post in site.posts %}
+        {% for tag in post.tags %}
+          {% unless all_tags contains tag %}
+            {% assign all_tags = all_tags | push: tag %}
+          {% endunless %}
+        {% endfor %}
+      {% endfor %}
+      {% assign sorted_tags = all_tags | sort %}
+
+      {% for tag in sorted_tags %}
+        {% assign tag_posts = site.posts | where_exp: "item", "item.tags contains tag" | sort: 'date' | reverse %}
+        {% if tag_posts.size > 0 %}
+          <div class="tag-section">
+            <h4 id="{{ tag | slugify }}">{{ tag | replace: "-", " " | capitalize }}</h4>
+            <div class="tag-posts-list">
+              {% for post in tag_posts %}
+                <div class="tag-post-item">
+                  <a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a>
+                  <span class="post-date">{{ post.date | date: "%b %d, %Y" }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Tag Index -->
+    <div class="tag-index">
+      <h3>All Tags</h3>
+      <div class="tag-cloud">
+        {% for tag in sorted_tags %}
+          {% assign tag_posts = site.posts | where_exp: "item", "item.tags contains tag" %}
+          {% if tag_posts.size > 0 %}
+            <a href="#{{ tag | slugify }}" class="tag-link">{{ tag | replace: "-", " " }} ({{ tag_posts.size }})</a>
           {% endif %}
         {% endfor %}
-        {% if root_posts.size > 0 %}
-        <div class="directory-section">
-          <h3>Other Posts</h3>
-          <div class="blog-posts-grid">
-            {% for post in root_posts %}
-              <div class="blog-card">
-                <h4><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h4>
-                {% if post.excerpt %}
-                  <p class="blog-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-                {% endif %}
-                
-                <div class="blog-metadata">
-                  {% if post.tags.size > 0 %}
-                    <div class="blog-tags">
-                      {% for tag in post.tags limit:3 %}
-                        <span class="blog-tag">{{ tag }}</span>
-                      {% endfor %}
-                      {% if post.tags.size > 3 %}
-                        <span class="blog-tag">+{{ post.tags.size | minus: 3 }}</span>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                  
-                  {% if post.date %}
-                    <div class="blog-date">
-                      <i class="fa fa-calendar" aria-hidden="true"></i> {{ post.date | date: "%B %d, %Y" }}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
-      {% endif %}
-    {% endif %}
-    
-    {% if blog_dirs.size == 0 and site.blog.size == 0 %}
-      <p class="notice--info">Blog content coming soon! You can add blog posts by importing your Obsidian vault using the Python script in _scripts/obsidian_to_website.py</p>
-    {% endif %}
-  </div>
+      </div>
+    </div>
+  {% else %}
+    <p>No blog posts available yet. Check back soon for updates!</p>
+  {% endif %}
 </div>
 
 <style>
-  .knowledge-graph-container {
-    width: 100%;
-    height: 600px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin: 1em 0 3em 0;
-    position: relative;
-    background: #f9f9f9;
+  /* Use site's existing CSS custom properties for theme consistency */
+  .blog-content {
+    color: var(--global-text-color);
+    background-color: var(--global-bg-color);
   }
-  
+
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4 {
+    color: var(--global-text-color);
+  }
+
+  .blog-content p {
+    color: var(--global-text-color-light);
+  }
+
   .blog-posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
     margin: 1em 0 2em 0;
   }
   
   .blog-card {
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    padding: 1.5em;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    background-color: var(--global-bg-color);
+    border: 1px solid var(--global-border-color);
+    border-radius: 6px;
+    padding: 1.2em;
+    transition: all 0.3s ease;
   }
   
   .blog-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--global-link-color);
+  }
+
+  .blog-card h4 {
+    margin-top: 0;
+    margin-bottom: 0.8em;
+  }
+
+  .blog-card h4 a {
+    color: var(--global-link-color);
+    text-decoration: none;
+    font-size: 1em;
+    line-height: 1.3;
+  }
+
+  .blog-card h4 a:hover {
+    color: var(--global-link-color-hover);
+    text-decoration: underline;
   }
   
   .blog-excerpt {
-    color: #666;
-    margin: 0.8em 0;
-    font-size: 0.9em;
+    color: var(--global-text-color-light);
+    margin: 0.6em 0;
+    font-size: 0.85em;
+    line-height: 1.4;
   }
   
   .blog-metadata {
     display: flex;
     justify-content: space-between;
-    margin-top: 1.5em;
-    font-size: 0.8em;
+    margin-top: 1em;
+    font-size: 0.75em;
     flex-wrap: wrap;
+    gap: 0.5em;
   }
   
   .blog-tags {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.3em;
   }
   
   .blog-tag {
-    background-color: #e9ecef;
-    padding: 0.2em 0.6em;
+    background-color: var(--global-footer-bg-color);
+    color: var(--global-text-color-light);
+    padding: 0.2em 0.5em;
     border-radius: 3px;
-    margin-right: 0.5em;
-    margin-bottom: 0.5em;
+    font-size: 0.8em;
+    border: 1px solid var(--global-border-color);
   }
   
   .blog-date {
-    color: #666;
+    color: var(--global-text-color-light);
+    white-space: nowrap;
+    font-size: 0.8em;
+  }
+  
+  .recent-posts-section,
+  .tags-section {
+    margin-bottom: 3em;
+  }
+  
+  .recent-posts-section h3,
+  .tags-section h3 {
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--global-link-color);
+    color: var(--global-text-color);
+  }
+
+  .tag-section {
+    margin-bottom: 2em;
+  }
+
+  .tag-section h4 {
+    color: var(--global-link-color);
+    margin-bottom: 0.8em;
+    font-size: 1.1em;
+    border-bottom: 1px solid var(--global-border-color);
+    padding-bottom: 0.3em;
+  }
+
+  .tag-posts-list {
+    display: grid;
+    gap: 0.5em;
+  }
+
+  .tag-post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0.8em;
+    background-color: var(--global-bg-color);
+    border-radius: 4px;
+    border: 1px solid var(--global-border-color);
+    transition: all 0.2s ease;
+  }
+
+  .tag-post-item:hover {
+    background-color: var(--global-footer-bg-color);
+    border-color: var(--global-link-color);
+  }
+
+  .tag-post-item a {
+    color: var(--global-text-color);
+    text-decoration: none;
+    flex: 1;
+    margin-right: 1em;
+  }
+
+  .tag-post-item a:hover {
+    color: var(--global-link-color);
+    text-decoration: underline;
+  }
+
+  .tag-post-item .post-date {
+    color: var(--global-text-color-light);
+    font-size: 0.85em;
     white-space: nowrap;
   }
   
-  .directory-section {
-    margin-bottom: 2em;
+  .tag-index {
+    background-color: var(--global-footer-bg-color);
+    border: 1px solid var(--global-border-color);
+    border-radius: 6px;
+    padding: 1.5em;
+    margin-top: 2em;
+  }
+
+  .tag-index h3 {
+    color: var(--global-text-color);
+    margin-top: 0;
+    margin-bottom: 1em;
   }
   
-  .directory-section h3 {
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .notice--info {
-    background-color: #d9edf7;
-    border: 1px solid #bce8f1;
-    border-radius: 4px;
-    padding: 15px;
-    color: #31708f;
-    margin: 1em 0;
-  }
-  
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    color: #666;
-    font-style: italic;
-  }
-  
-  .graph-filter-container {
-    margin: 1em 0;
-  }
-  
-  .filter-buttons {
+  .tag-cloud {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 0.5em;
+    gap: 0.5em;
   }
   
-  .filter-button {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    padding: 0.3em 0.8em;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .filter-button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .filter-button.active {
-    background-color: #4285f4;
-    color: white;
-    border-color: #3367d6;
-  }
-  
-  .node-info-panel {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 250px;
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    z-index: 100;
-    overflow: hidden;
-  }
-  
-  .info-header {
-    padding: 10px;
-    color: white;
-    position: relative;
-  }
-  
-  .info-header h3 {
-    margin: 0;
-    padding-right: 30px;
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .info-body {
-    padding: 15px;
-  }
-  
-  .view-post-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 12px;
-    background-color: #4285f4;
-    color: white;
+  .tag-link {
+    background-color: var(--global-bg-color);
+    color: var(--global-text-color-light);
+    padding: 0.4em 0.8em;
     border-radius: 4px;
     text-decoration: none;
     font-size: 0.9em;
-    transition: background-color 0.2s;
+    border: 1px solid var(--global-border-color);
+    transition: all 0.2s ease;
   }
   
-  .view-post-btn:hover {
-    background-color: #3367d6;
+  .tag-link:hover {
+    background-color: var(--global-link-color);
+    color: #fff;
+    border-color: var(--global-link-color);
     text-decoration: none;
   }
-</style>
 
-<script src="{{ base_path }}/assets/js/knowledge-graph.js"></script>
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .blog-posts-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    
+    .blog-card {
+      padding: 1em;
+    }
+    
+    .tag-cloud {
+      gap: 0.3em;
+    }
+    
+    .tag-link {
+      font-size: 0.8em;
+      padding: 0.3em 0.6em;
+    }
+  }
+
+  /* Dark theme specific shadow adjustments */
+  html[data-theme="dark"] .blog-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+</style>

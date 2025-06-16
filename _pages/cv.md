@@ -3,8 +3,6 @@ layout: archive
 title: "CV"
 permalink: /cv/
 author_profile: true
-redirect_from:
-  - /resume
 ---
 
 {% include base_path %}
@@ -75,14 +73,6 @@ Publications & Preprints
   Joseph Lannan, Carlos Floyd, L. X. Xu, Connie Yan, Wallace F. Marshall, Surirayanarayanan Vaikuntanathan, Aaron R. Dinner, Jerry E. Honts, Saad Bhamla, and Mary Williard Elting
   Biorxiv (2025)
   doi: [https://doi.org/10.1101/2024.11.07.622534](https://doi.org/10.1101/2024.11.07.622534)
----
-layout: archive
-title: "CV"
-permalink: /cv/
-author_profile: true
-redirect_from:
-  - /resume
----
 
 {% include base_path %}
 

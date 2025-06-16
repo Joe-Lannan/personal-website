@@ -6,7 +6,7 @@ author_profile: true
 ---
 
 {% include base_path %}
-
+   
 # Current Research
 
 ## Ultrafast Cellular Contraction in *Spirostomum ambiguum*
