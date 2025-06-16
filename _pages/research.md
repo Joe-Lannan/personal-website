@@ -7,27 +7,44 @@ author_profile: true
 
 {% include base_path %}
 
-# Education
-
-* **PhD in Physics** (in progress) - North Carolina State University
-* **MS in Physics** (2022) - North Carolina State University - [View Diploma](/files/Diplomas/Joe_Lannan_Masters_Diploma.pdf)
-* **BS in Physics, Minor in Mathematics** (2018) - North Carolina State University, *Magna Cum Laude* - [View Diploma](/files/Diplomas/Joe_Lannan_Bachelors.pdf)
-* [View Complete Academic Transcript](/files/Diplomas/Transcript.pdf)
-
 # Current Research
 
-## Investigation of Spirostomum ambiguum Cytoskeleton
+## Ultrafast Cellular Contraction in *Spirostomum ambiguum*
 
-My primary research focuses on investigating the cytoskeleton of *Spirostomum ambiguum*, often called "the fastest cell" due to its ability to contract its giant single-celled body in the blink of an eye. We found that its contraction is due to unique filaments known as the myoneme that allow it to contract without using traditional contractile machinery.
+My research investigates the biomechanical basis of the fastest cellular contraction known in biology. *Spirostomum ambiguum*, a single-celled giant protist, can contract its entire 1-4 mm body in under 5 milliseconds - faster than the blink of an eye.
 
 ![Spirostomum Contraction](/images/spirostomum.jpg)
 
-### Key Research Areas and Techniques:
+### Key Discoveries
 
-#### Immuno-TEM imaging of Spirostomum Ambiguum
-I performed advanced imaging using Immuno-TEM on the *Spirostomum* myoneme. This technique labeled centrin on the myoneme, confirming the presence of centrin in contracted and elongated cells and showing the structure of centrin-binding filaments in the myoneme. I further analyzed the structures of the uncontracted myoneme using AI-computer vision and graph theory analysis. This represented one of the first applications of immuno-TEM to this organism, requiring development of specialized protocols.
+Through advanced imaging and computational analysis, I've revealed that this remarkable contraction is powered by a specialized cytoskeletal structure called the myoneme - a calcium-activated mesh of centrin-Sfi1 filaments that functions unlike any known contractile machinery.
 
-#### Confocal fluorescence imaging
+### Research Techniques & Capabilities
+
+**Advanced Microscopy:**
+- Immuno-TEM imaging with custom protocols
+- Confocal fluorescence microscopy
+- Scanning and transmission electron microscopy
+- High-speed video analysis
+
+**Computational Methods:**
+- AI-based computer vision analysis
+- Graph theory applications for structural analysis
+- Advanced computational modeling
+- Image processing and quantitative analysis
+
+**Laboratory Techniques:**
+- Cell culture and micromanipulation
+- Atomic force microscopy (AFM)
+- Magnetic tweezing
+- Microinjection systems
+- Laser-based experimental setups
+
+### Technical Skills
+
+**Programming:** Python, Bash, Mathematica, MATLAB, C/C++  
+**Software:** ImageJ, Imaris, Illastik, Autodesk Fusion 360, Adobe Suite, Linux  
+**Fabrication:** 3D printing, electronics, machining, laser cutting
 *Spirostomum* presents many unique challenges for imaging, including its ability to rapidly contract and its sensitivity to chemicals. I've developed specialized methods for fixation and imaging, and applied various image analysis techniques using ImageJ and biophysical modeling to understand force generation of the *Spirostomum* cytoskeleton. Our techniques enable visualization of the myoneme network in both contracted and elongated states, providing critical insights into the contractile mechanism.
 
 #### Multiscale computational modeling
