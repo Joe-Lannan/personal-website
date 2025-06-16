@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "id": "biophysics/spirostomum-contraction",
+      "label": "Ultrafast Contraction in Spirostomum ambiguum",
+      "tags": ["biophysics", "spirostomum", "cell mechanics", "research"],
+      "path": "/blog/biophysics/spirostomum-contraction/",
+      "size": 10,
+      "color": "#ea4335"
+    },
+    {
+      "id": "programming/retro-game-development",
+      "label": "Developing Retro Games for Handheld Consoles",
+      "tags": ["programming", "game development", "embedded systems", "retro gaming", "koinslot"],
+      "path": "/blog/programming/retro-game-development/",
+      "size": 10,
+      "color": "#4285f4"
+    }
+  ],
+  "links": [
+    {
+      "source": "biophysics/spirostomum-contraction",
+      "target": "programming/retro-game-development",
+      "value": 1
+    }
+  ]
+}
